@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Gate;
 
 class MaintenanceRequestController extends Controller
 {
@@ -43,6 +44,8 @@ class MaintenanceRequestController extends Controller
 
     public function show(MaintenanceRequest $maintenanceRequest): MaintenanceRequestResource
     {
+        Gate::authorize('view', $maintenanceRequest);
+
         return new MaintenanceRequestResource($maintenanceRequest);
     }
 }

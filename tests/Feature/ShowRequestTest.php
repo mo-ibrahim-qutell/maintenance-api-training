@@ -22,4 +22,18 @@ class ShowRequestTest extends TestCase
             ->assertJsonPath('data.id', $request->id)
             ->assertJsonPath('data.technician.id', $technician->id);
     }
+
+    public function test_a_technician_cannot_open_another_technicians_request(): void
+    {
+        $technician = User::factory()->technician()->create();
+        $otherTechnician = User::factory()->technician()->create();
+        $request = MaintenanceRequest::factory()->create([
+            'technician_id' => $otherTechnician->id,
+            'status' => 'assigned',
+        ]);
+
+        $this->actingAs($technician)
+            ->getJson("/api/v1/requests/{$request->id}")
+            ->assertForbidden();
+    }
 }

@@ -22,6 +22,7 @@ class MaintenanceRequest extends Model
         'technician_id',
         'title',
         'description',
+        'priority',
         'status',
         'scheduled_at',
         'completed_at',
@@ -31,6 +32,7 @@ class MaintenanceRequest extends Model
     {
         return [
             'scheduled_at' => 'datetime',
+            'completed_at' => 'datetime',
         ];
     }
 

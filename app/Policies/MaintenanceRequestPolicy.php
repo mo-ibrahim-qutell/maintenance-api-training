@@ -7,6 +7,11 @@ use App\Models\User;
 
 class MaintenanceRequestPolicy
 {
+    public function view(User $user, MaintenanceRequest $request): bool
+    {
+        return $user->isOffice() || ($user->isTechnician() && $request->technician_id === $user->id);
+    }
+
     public function create(User $user): bool
     {
         return $user->isOffice();
